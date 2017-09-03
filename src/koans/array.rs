@@ -94,7 +94,7 @@ fn complex_array_filter_map() {
 #[test]
 fn for_loops() {
     let arr: [u64; 3] = [1, 1, 1];
-    let mut y: u64 = 1;
+    let y: u64 = 1;
     for x in &arr {
         assert!(*x == y);
     }
