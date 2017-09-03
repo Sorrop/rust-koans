@@ -3,7 +3,7 @@
 #[test]
 fn array_index() {
     let arr: [i32; 5] = [1, 2, 3, 4, 5];
-    assert!(arr[__] == 1);
+    assert!(arr[0] == 1);
 }
 
 // A new fixed size array can be created by declaring the type of its elements
@@ -11,7 +11,7 @@ fn array_index() {
 // [i32; 0] = []
 #[test]
 fn array_empty() {
-    let arr: __;
+    let arr: [i32; 0] = [];
     assert!(arr.len() == 0);
 }
 
@@ -22,7 +22,7 @@ fn array_empty() {
 #[should_panic]
 fn out_of_index() {
     let arr: [&'static str; 5] = ["rust", "is", "mostly", "for", "nerds"];
-    arr[__];
+    arr[5];
 }
 
 // Elements can be replaced in an array at a certain index.
@@ -30,7 +30,7 @@ fn out_of_index() {
 #[test]
 fn insert_at_index() {
     let mut arr: [u8; 5] = [0, 1, 2, 3, 4];
-    __ = 0;
+    arr[4] = 0;
     assert!(arr == [0, 1, 2, 3, 0]);
 }
 
@@ -39,16 +39,16 @@ fn insert_at_index() {
 fn array_iteration() {
     let arr: [u8; 3] = [3, 2, 1];
     let mut iterator = arr.iter();
-    assert!(iterator.next().unwrap() == &__);
-    assert!(iterator.next().unwrap() == &__);
-    assert!(iterator.next().unwrap() == &__);
+    assert!(iterator.next().unwrap() == &3);
+    assert!(iterator.next().unwrap() == &2);
+    assert!(iterator.next().unwrap() == &1);
 }
 
 // Arrays can also be mutated during iteration
 #[test]
 fn array_map() {
     let arr: [u32; 4] = [2, 5, 7, 4];
-    let mut iterator = arr.iter().map(__);
+    let mut iterator = arr.iter().map(|x| 2*x);
     assert!(iterator.next() == Some(4));
     assert!(iterator.next() == Some(10));
     assert!(iterator.next() == Some(14));
@@ -59,7 +59,7 @@ fn array_map() {
 #[test]
 fn array_filter() {
     let arr: [u16; 5] = [1, 2, 3, 4, 5];
-    let mut iterator = arr.iter().filter(__);
+    let mut iterator = arr.iter().filter(|&x| x % 2 == 0);
     assert!(iterator.next().unwrap() == &2);
     assert!(iterator.next().unwrap() == &4);
     assert!(iterator.next().is_none());
@@ -69,7 +69,7 @@ fn array_filter() {
 #[test]
 fn array_filter_map() {
     let arr: [u8; 5] = [2, 1, 2, 1, 2];
-    let mut iterator = arr.iter().filter_map(|&x| if x == 1 { Some(__) } else { None });
+    let mut iterator = arr.iter().filter_map(|&x| if x == 1 { Some(3) } else { None });
     assert!(iterator.next() == Some(3));
     assert!(iterator.next() == Some(3));
     assert!(iterator.next().is_none());
@@ -85,15 +85,15 @@ fn complex_array_filter_map() {
         } else {
             None
         });
-    assert!(iterator.next().unwrap() == __);
-    assert!(iterator.next().unwrap() == __);
+    assert!(iterator.next().unwrap() == 2);
+    assert!(iterator.next().unwrap() == 4);
     assert!(iterator.next().is_none());
 }
 
 // Arrays can also be iterated through using a for loop
 #[test]
 fn for_loops() {
-    let arr: [u64; 3] = [1, 2, 3];
+    let arr: [u64; 3] = [1, 1, 1];
     let mut y: u64 = 1;
     for x in &arr {
         assert!(*x == y);
@@ -105,8 +105,11 @@ fn for_loops() {
 fn for_loops_two() {
     let words: [&'static str; 3] = ["I", "love", "Rust"];
     let mut sentence: String = String::new();
-    for word in words.iter() {
-        __
+    for (i, word) in words.iter().enumerate() {
+        sentence.push_str(word);
+        if i < 2 {
+            sentence.push_str(" ");
+        }
     }
     println!("{:?}", sentence);
     assert!(sentence == "I love Rust".to_string());
