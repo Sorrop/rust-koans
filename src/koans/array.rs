@@ -20,6 +20,7 @@ fn array_empty() {
 // that error in this example.
 #[test]
 #[should_panic]
+#[allow(const_err)]
 fn out_of_index() {
     let arr: [&'static str; 5] = ["rust", "is", "mostly", "for", "nerds"];
     arr[5];
@@ -97,6 +98,7 @@ fn for_loops() {
     let y: u64 = 1;
     for x in &arr {
         assert!(*x == y);
+        __
     }
 }
 

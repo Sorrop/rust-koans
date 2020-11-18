@@ -42,6 +42,7 @@ fn add_numbers() {
 // Like any variable in Rust, integers are immutable unless declared otherwise
 #[test]
 fn mutating_ints() {
+
     let mut num: i8 = 1;
     num += 2;
     assert!(num == 3);

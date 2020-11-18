@@ -9,19 +9,20 @@ use std::io::{BufRead, BufReader, Write};
 
 #[cfg(not(test))]
 fn main() {
-    let message = match walk_the_path() {
-        true => {
-            match seek_the_path() {
-                true => "Eternity lies ahead of us, and behind. Your path is not yet finished.",
-                false => "What is the sound of one hand clapping (for you)?",
-            }
+    let message = if walk_the_path() {
+        if seek_the_path() {
+            "Eternity lies ahead of us, and behind. Your path is not yet finished."
+        } else {
+            "What is the sound of one hand clapping (for you)?"
         }
-        false => "Meditate on your approach and return. Mountains are merely mountains.",
+    } else {
+        "Meditate on your approach and return. Mountains are merely mountains."
     };
 
     println!("{}", message);
 }
 
+#[allow(unused_macros)]
 macro_rules! koan {
     ($name:expr) => (
         include!(concat!("koans/", $name, ".rs"));
@@ -33,7 +34,7 @@ fn seek_the_path() -> bool {
     let mut koans = BufReader::new(File::open("src/koans.txt").unwrap()).lines();
     let mut path = OpenOptions::new()
         .read(true)
-        .write(true)
+        .append(true)
         .open("src/path_to_enlightenment.rs")
         .unwrap();
     let passed_count = BufReader::new(&path).lines().count();
@@ -50,11 +51,6 @@ fn seek_the_path() -> bool {
 
 #[cfg(not(test))]
 fn walk_the_path() -> bool {
-    Command::new("cargo")
-        .arg("clean")
-        .status()
-        .unwrap()
-        .success();
     Command::new("cargo")
         .arg("test")
         .arg("-q")

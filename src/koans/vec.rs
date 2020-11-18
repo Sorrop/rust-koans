@@ -20,7 +20,7 @@ fn adding_to_vecs() {
     assert!(vector.len() == 4);
 }
 
-// Elements can also be remove from mutable Vecs
+// Elements can also be removed from mutable Vecs
 #[test]
 fn removing_from_end_of_vecs() {
     let mut vector = vec![0, 1, 2, 3];
@@ -86,7 +86,7 @@ fn truncate() {
     assert_eq!(vector, vec![1, 2]);
 }
 
-// New elements can be stuffed into mutable Vecors
+// New elements can be stuffed into mutable Vectors
 #[test]
 fn insert() {
     let mut vector = vec![1, 2, 3, 4, 5];
@@ -192,7 +192,7 @@ fn splitting() {
     assert_eq!(langs2, &["Python", "C++"]);
 }
 
-// Or if you don't know the specific index, you can supply a conditon at which to split
+// Or if you don't know the specific index, you can supply a condition at which to split
 // The new groups will not include the elements that match the condition
 #[test]
 fn more_splitting() {
